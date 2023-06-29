@@ -11,16 +11,19 @@ import time
 
 # client = snap7.client.Client()
 # client.connect('192.168.1.121', 0, 1)
+PLC_IP = '192.168.1.121'
 
 
 try:
     client = snap7.client.Client()
-    client.connect('192.168.1.121', 0, 2)
-except snap7.snap7exceptions.Snap7Exception:
+    client.connect(PLC_IP, 0, 1)
+    print('connected to PLC')
+except snap7.error.s7_server_errors as e:
+    print('Błąd podczas nawiązywania połączenia:', str(e))
     time.sleep(0.2)
     client = snap7.client.Client()
-    client.connect('192.168.1.121', 0, 1)
-    print('connected to PLC')
+    client.connect(PLC_IP, 0, 1)
+    print('next connected to PLC')
 else:
-    print('not connected')
+    print('closing the connection')
 
